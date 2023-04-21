@@ -1,0 +1,70 @@
+= Open id connect playground
+
+== Reference Documentation about OAuth 2 and java
+
+Useful links :
+
+https://developer.okta.com/blog/2022/06/16/oauth-java
+
+https://www.youtube.com/watch?v=z2Bt971k1EE
+
+== Different flows
+
+=== Client credentials flow
+
+Used for machine to machine application, server between server calls.
+
+https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization
+
+flow-client-credentials.drawio[]
+
+What are the vulnerabilities of this flow?
+
+Client have to keep secrets somewhere.
+It fits to machine to machine calls and not to frontend to backend calls as we cannot store secrets in the browser.
+
+0 : call the api without access token, you will receive unauthorized
+
+```bash
+curl -vv --request GET --url http://localhost:8080/api/private
+```
+
+1 : set the client secret
+
+```bash
+export YOUR_CLIENT_SECRET="^^"
+```
+
+2 : use it to retrieve access token
+
+```bash
+curl --request POST \
+--url 'https://dev-j7lw7d1ng6r507v8.eu.auth0.com/oauth/token' \
+--header 'content-type: application/x-www-form-urlencoded' \
+--data grant_type=client_credentials \
+--data 'client_id=lYVo0YhhPSGgpBwTG2NO2nA6OHaS4Efe' \
+--data client_secret=$YOUR_CLIENT_SECRET \
+--data audience=https://quickstarts/api
+```
+
+3 : set the access token
+
+```bash
+export YOUR_ACCESS_TOKEN=`curl --request POST \
+--url 'https://dev-j7lw7d1ng6r507v8.eu.auth0.com/oauth/token' \
+--header 'content-type: application/x-www-form-urlencoded' \
+--data grant_type=client_credentials \
+--data 'client_id=lYVo0YhhPSGgpBwTG2NO2nA6OHaS4Efe' \
+--data client_secret=$YOUR_CLIENT_SECRET \
+--data audience=https://quickstarts/api | jq --raw-output .access_token`
+```
+
+4 : Use to call the api
+
+```bash
+curl -vv --request GET --url http://localhost:8080/api/private  --header "authorization: Bearer ${YOUR_ACCESS_TOKEN}"
+```
+
+=== Authorization code flow ('the gold standard')
+
+Work in progress 🚧
