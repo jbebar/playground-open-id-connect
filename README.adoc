@@ -12,6 +12,8 @@ https://www.youtube.com/watch?v=z2Bt971k1EE
 
 === Client credentials flow
 
+==== Context
+
 Used for machine to machine application, server between server calls.
 
 https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization
@@ -22,6 +24,68 @@ What are the vulnerabilities of this flow?
 
 Client have to keep secrets somewhere.
 It fits to machine to machine calls and not to frontend to backend calls as we cannot store secrets in the browser.
+
+==== Create your application and api in Auth0
+
+1 - You need to create and Auth0 account free plan
+
+For more details see the Auth0 website.
+
+2 - Create an api in Auth0 with the following information :
+
+|===
+|Name |Description |Example value
+
+|Identifier
+|Will identify your API in auth0, corresponds to the audience in the token creation request.
+|https://quickstarts/api
+
+|Permissions (Scope)
+|All the permissions that the API uses and that can be selected or not for each client of the API. Often of the following form : action:resource
+|read:messages
+
+|===
+
+Other settings (Algorithm, Token Expiration etc) will be set by default by Auth0.
+
+3 - Create an application that will consume this api
+
+|===
+|Name |Description |Example value
+
+|Domain
+|The domain on which you will be able to use this application
+|dev-j7lw7d1ng6r507v8.eu.auth0.com
+
+|Client Id
+|Unique identifier of your application in the domain, set by Auth0 automatically. It is like your user name or email when compared to a human user.
+|lYVo0YhhPSGgpBwTG2NO2nA6OHaS4Efe
+
+|Client Secret
+|Must never be shared, enables you to create your token from auth0 api. Like the password for a human user.
+|wtlvOcB9e3NU7hCfPN_D9HsLE61-1-0iFByBxfe9uUyk5Fj1A0IghhsO34vda8b
+
+|Application type
+|The type of grant or flow that this application will follow.
+|In our case here it is Machine To Machine
+
+|Allow Cross Origin Authentication
+| Check here for more details https://auth0.com/docs/authenticate/login/cross-origin-authentication
+| Yes with the authorized cross origins
+
+|APIs
+|List of APIs that the application will have access to
+|https://quickstarts/api
+
+
+|Scopes
+|List of scopes that the application will be given when creating its access token. The scope will be present in the access token.
+|ex: read:messages for the https://quickstarts/api
+
+|===
+
+
+==== Demo
 
 0 : call the api without access token, you will receive unauthorized
 
