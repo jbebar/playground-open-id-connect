@@ -8,6 +8,14 @@ https://developer.okta.com/blog/2022/06/16/oauth-java
 
 https://www.youtube.com/watch?v=z2Bt971k1EE
 
+== Build and run locally
+
+[source,shell]
+docker build . -t playground-open-id-connect
+
+[source,shell]
+docker run -p8080:8080 -it playground-open-id-connect
+
 == Different flows
 
 === Client credentials flow
@@ -70,7 +78,7 @@ Other settings (Algorithm, Token Expiration etc) will be set by default by Auth0
 |In our case here it is Machine To Machine
 
 |Allow Cross Origin Authentication
-| Check here for more details https://auth0.com/docs/authenticate/login/cross-origin-authentication
+| Check here for more details https://auth0.com/docs/authenticate/login/cross-origin-authentication.
 | Yes with the authorized cross origins
 
 |APIs
