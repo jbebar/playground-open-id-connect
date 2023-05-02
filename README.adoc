@@ -97,19 +97,22 @@ Other settings (Algorithm, Token Expiration etc) will be set by default by Auth0
 
 0 : call the api without access token, you will receive unauthorized
 
-```bash
+[source,bash]
+----
 curl -vv --request GET --url http://localhost:8080/api/private
-```
+----
 
 1 : set the client secret
 
-```bash
+[source,bash]
+----
 export YOUR_CLIENT_SECRET="^^"
-```
+----
 
 2 : use it to retrieve access token
 
-```bash
+[source,bash]
+----
 curl --request POST \
 --url 'https://dev-j7lw7d1ng6r507v8.eu.auth0.com/oauth/token' \
 --header 'content-type: application/x-www-form-urlencoded' \
@@ -117,11 +120,12 @@ curl --request POST \
 --data 'client_id=lYVo0YhhPSGgpBwTG2NO2nA6OHaS4Efe' \
 --data client_secret=$YOUR_CLIENT_SECRET \
 --data audience=https://quickstarts/api
-```
+----
 
 3 : set the access token
 
-```bash
+[source,bash]
+----
 export YOUR_ACCESS_TOKEN=`curl --request POST \
 --url 'https://dev-j7lw7d1ng6r507v8.eu.auth0.com/oauth/token' \
 --header 'content-type: application/x-www-form-urlencoded' \
@@ -129,13 +133,14 @@ export YOUR_ACCESS_TOKEN=`curl --request POST \
 --data 'client_id=lYVo0YhhPSGgpBwTG2NO2nA6OHaS4Efe' \
 --data client_secret=$YOUR_CLIENT_SECRET \
 --data audience=https://quickstarts/api | jq --raw-output .access_token`
-```
+----
 
 4 : Use to call the api
 
-```bash
+[source,bash]
+----
 curl -vv --request GET --url http://localhost:8080/api/private  --header "authorization: Bearer ${YOUR_ACCESS_TOKEN}"
-```
+----
 
 === Authorization code flow ('the gold standard')
 
