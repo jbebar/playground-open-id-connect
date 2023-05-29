@@ -9,8 +9,9 @@ spec:
       SNAPSHOT
     app.kubernetes.io/name:
       playground-oidc
+  type: LoadBalancer
   ports:
     - protocol: TCP
       targetPort: test-oidc
       port: 80
-  type: ClusterIP
+      nodePort: 30010

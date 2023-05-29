@@ -1,0 +1,36 @@
+= Commands to deploy in kubernetes sample app
+
+== Deploy pods
+
+Deploy only one instance using kubectl create deploy :
+
+[source,shell]
+kubectl apply -f deployment.yaml -n default
+
+We should see the deployed pods after a minute :
+
+[source,shell]
+kubectl get po -n default
+
+
+== Add a service to pods
+
+The pods are deployed but for other pods to be able to contact the pods without knowing the ip of the pod, we can deploy a service that will expose this pods in a single ip to the rest of the cluster.
+
+[source,shell]
+kubectl apply -f service.yaml -n default
+
+We should see the deployed service :
+
+[source,shell]
+kubectl describe svc playground-oidc-service -n default
+
+Request a pod using the internal ip of the service :
+
+[source,shell]
+kubectl run -i -t busybox --image=busybox --rm --restart=Never -- wget -qO- http://10.1.0.88:8080/api/public
+
+Should return :
+
+{"message":"All good. You DO NOT need to be authenticated to call /api/public."}pod "busybox" deleted
+
